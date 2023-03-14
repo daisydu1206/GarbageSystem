@@ -11,7 +11,7 @@ class PlayModel(db.Model):
     create_time = db.Column(db.DateTime)
     reply_time = db.Column(db.DateTime)
 
-Run git config --global user.email "you@example.com" git config --global user.name "Your Name"
+# Run git config --global user.email "you@example.com" git config --global user.name "Your Name"
 
 
 
