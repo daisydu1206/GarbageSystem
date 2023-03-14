@@ -35,7 +35,7 @@ CACHE_DEFAULT_TIMEOUT = 300
 CACHE_REDIS_HOST = "127.0.0.1"
 CACHE_REDIS_PORT = "6379"
 
-
+# 密钥
 SECRET_KEY = "abcdefghijklmn"
 
 BASE_DIR = os.path.dirname(__file__)
