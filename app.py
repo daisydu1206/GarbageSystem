@@ -2,6 +2,8 @@ from flask import Flask
 import config
 from exts import db, mail, cache, csrf, avatars
 from flask_migrate import Migrate
+from models import admin, errorInfo, garbage, search, user, game
+
 
 app = Flask(__name__)
 app.config.from_object(config)
