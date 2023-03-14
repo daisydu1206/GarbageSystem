@@ -7,5 +7,4 @@ from flask_avatars import Avatars
 db = SQLAlchemy()
 mail = Mail()
 cache = Cache()
-csrf = CSRFProtect()
 avatars = Avatars()

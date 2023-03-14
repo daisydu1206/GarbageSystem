@@ -35,14 +35,13 @@ CACHE_DEFAULT_TIMEOUT = 300
 CACHE_REDIS_HOST = "127.0.0.1"
 CACHE_REDIS_PORT = "6379"
 
-# 密钥
+
 SECRET_KEY = "abcdefghijklmn"
 
 BASE_DIR = os.path.dirname(__file__)
-
 PERMANENT_SESSION_LIFETIME = timedelta(days=7)
 
 
-AVATARS_SAVE_PATH = os.path.join(BASE_DIR, "media", "avatars")
-POST_IMAGE_SAVE_PATH = os.path.join(BASE_DIR, "media", "post")
+AVATARS_SAVE_PATH = os.path.join(BASE_DIR, "media", "admin", "avatars")
+
 
