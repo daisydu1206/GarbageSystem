@@ -3,6 +3,8 @@ from exts import cache, db
 import random
 import string
 from utils import restful
+
+
 from io import BytesIO
 from models.admin import AdminModel
 from hashlib import md5
@@ -27,8 +29,9 @@ def front_before_request():
         setattr(g, "admin", None)
 
 
-@bp.route("/login", methods=['POST'])
+@bp.route("/login", methods=['post'])
 def login():
+    # print('111')
     form = LoginForm(request.form)
     if form.validate():
         login_data = adminLogin(form)
@@ -36,6 +39,14 @@ def login():
     else:
         message = form.messages[0]
         return restful.params_error(message=message)
+
+    #测试
+    # control = true
+    # if (control):
+    #     resp = restful.ok(message="成功登录")
+    # else:
+    #     resp = restful.server_error(message="登录失败")
+    # return resp
 
 
 @bp.route("/logout")
