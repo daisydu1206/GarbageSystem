@@ -5,7 +5,7 @@ class UserModel(db.Model):
     __tablename__ = "user"
     open_id = db.Column(db.String(100), primary_key=True)
     user_name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(50), nullable=False, unique=True)
+    email = db.Column(db.String(50))
     avatar = db.Column(db.String(100))
     sex = db.Column(db.String(16))
     age = db.Column(db.Integer)

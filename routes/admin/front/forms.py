@@ -5,7 +5,7 @@ from flask_wtf.file import FileAllowed, FileSize
 from wtforms import ValidationError
 from exts import cache
 from flask import request
-
+from models.admin import AdminModel
 class BaseForm(Form):
     @property
     def messages(self):
@@ -22,7 +22,10 @@ class LoginForm(BaseForm):
 
 class SetForm(BaseForm):
     admin_name = StringField(validators=[Length(3, 20, message="用户名格式不符合要求")])
-    password = StringField(validators=[Length(6, 20, message="密码格式错误")])
+    password = StringField(validators=[Length(6, 20, message="密码长度不符合要求")])
+    repeat_password = StringField(validators=[EqualTo("password", message="两次密码不一致")])
+    email = StringField(validators=[Email(message="邮箱格式错误")])
+
 
 
 class AvatarForm(BaseForm):
