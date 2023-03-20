@@ -5,7 +5,7 @@ from taskSchedule import scheduler
 from flask_migrate import Migrate
 from routes.admin.front import admin_bp
 from flask_cors import CORS
-
+from routes.user.views import user
 app = Flask(__name__)
 app.config.from_object(config)
 
@@ -19,6 +19,8 @@ migrate = Migrate(app, db)
 scheduler.start()
 
 app.register_blueprint(admin_bp)
+app.register_blueprint(user)
+
 CORS(app)
 
 

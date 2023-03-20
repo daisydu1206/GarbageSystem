@@ -43,3 +43,26 @@ class UserOperation():
         return top_user_dist
 
 
+    # #################################################################################################
+    # 段怡冰
+    def _userInfo(self, open_id):
+        userInfo = UserModel.query.filter_by(open_id=open_id).first()
+        return userInfo
+
+    def _modify(self, open_id, user_name, email, avatar, sex, age, school, location):
+        if user_name:
+            UserModel.query.filter_by(open_id=open_id).update({UserModel.user_name: user_name})
+        if email:
+            UserModel.query.filter_by(open_id=open_id).update({UserModel.email: email})
+        if avatar:
+            UserModel.query.filter_by(open_id=open_id).update({UserModel.avatar: avatar})
+        if sex:
+            UserModel.query.filter_by(open_id=open_id).update({UserModel.sex: sex})
+        if age:
+            UserModel.query.filter_by(open_id=open_id).update({UserModel.age: age})
+        if school:
+            UserModel.query.filter_by(open_id=open_id).update({UserModel.school: school})
+        if location:
+            UserModel.query.filter_by(open_id=open_id).update({UserModel.location: location})
+        db.session.commit()
+        return self._userInfo(open_id)
