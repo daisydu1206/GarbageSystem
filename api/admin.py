@@ -1,6 +1,6 @@
 from operation.admin import AdminOperation
 from operation.users import UserOperation
-from operation.garbage import GarbageOperation
+from operation.garbageSearch import GarbageSearchOperation
 from operation.play import PlayOperation
 from utils import restful
 from flask import session, current_app, g
@@ -21,6 +21,7 @@ def adminLogin(form):
     if admin['password'] != password:
         return restful.params_error(message="用户名或密码错误")
     session['admin_id'] = admin['admin_id']
+    print(session.get("admin_id"))
     return restful.ok(message="成功登录")
 
 
@@ -48,44 +49,48 @@ def adminSet(form):
     admin_name = form.admin_name.data
     password = form.password.data
     email = form.email.data
+    print(admin_name, password, email)
     admin_opt = AdminOperation()
     admin_opt._updateAdmin(admin_name, password, email)
     return restful.ok(data={"admin_name": admin_name, "password": password, "email": email}, message="信息修改成功")
 
 
-def getTodayInfo():
+def indexInfo():
     user_opt = UserOperation()
-    today = datetime.datetime.now().strftime('%Y-%m-%d')
-    user_num = user_opt._userNum()
-    new_user_num = user_opt._newUserNum(today)
-    old_user_num = user_num - new_user_num
+    today = datetime.datetime.now()
 
-    garbage_opt = GarbageOperation()
-    garbage_num = garbage_opt._garbageNum()
+    user_num_today = user_opt._userNumToday()
+    new_user_num_today = user_opt._newUserNumToday(today)
+    old_user_num_today = user_num_today - new_user_num_today
+
+    garbage_search_opt = GarbageSearchOperation()
+    search_num_today = garbage_search_opt._searchNumToday(today)
 
     play_opt = PlayOperation()
-    play_num = play_opt._playNumToday(today)
+    play_num_today = play_opt._playNumToday(today)
 
-    top_words_garbages = garbage_opt._topWords("文本", today)
+    top_words_garbages = garbage_search_opt._topWordsToay("文本", today)
     top_words_list = []
     for garbage in top_words_garbages:
         top_words_list.append(garbage[0])
 
-    top_images_garbages = garbage_opt._topWords("图片", today)
+    top_images_garbages = garbage_search_opt._topWordsToay("图片", today)
     top_images_list = []
     for garbage in top_images_garbages:
         top_images_list.append(garbage[0])
 
-    top_vocal_garbages = garbage_opt._topWords("语音", today)
+    top_vocal_garbages = garbage_search_opt._topWordsToay("语音", today)
     top_vocal_list = []
     for garbage in top_vocal_garbages:
         top_vocal_list.append(garbage[0])
 
-    return user_num, new_user_num, old_user_num, garbage_num, play_num, top_words_list, top_images_list, top_vocal_list
+    return user_num_today, new_user_num_today, old_user_num_today, search_num_today, play_num_today, top_words_list, top_images_list, top_vocal_list
 
 
-def userAnalsis():
+def userInfo():
+    today = datetime.datetime.now()
     user_opt = UserOperation()
+    admin_opt = AdminOperation()
     male_number, female_number = user_opt._userNumByGender()
     male_age_dist, female_age_dist = user_opt._userNumByAge()
     dist = user_opt._topDist()
@@ -93,7 +98,15 @@ def userAnalsis():
     for item in dist:
         top_user_dist[item[0]] = item[1]
 
-    return male_number, female_number, male_age_dist, female_age_dist, top_user_dist
+    user_login_week = []
+    user_game_week = []
+    user_infos = admin_opt._userInfoByWeek(today)
+    for user_info in user_infos:
+        user_login_week.append(user_info[0])
+        user_game_week.append(user_info[1])
+    # print(user_login_week, user_game_week)
+    return male_number, female_number, male_age_dist, female_age_dist, top_user_dist, user_login_week, user_game_week
+
 
 
 

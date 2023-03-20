@@ -1,4 +1,4 @@
-from models.user import UserModel
+from models.user import UserModel, LoginModel
 from exts import db
 from flask import g
 from datetime import datetime, timedelta
@@ -7,13 +7,13 @@ class UserOperation():
     def __init__(self):
         self.__fields__ = ['open_id', 'user_name', 'email', 'avatar', 'sex', 'age', 'school', 'location', 'score', 'create_time']
 
-    def _userNum(self):
-        user_num = UserModel.query.count()
-        return user_num
+    def _userNumToday(self):
+        user_num_today = LoginModel.query.count()
+        return user_num_today
 
-    def _newUserNum(self, day):
-        new_user_num = UserModel.query.filter(UserModel.create_time >= day).count()
-        return new_user_num
+    def _newUserNumToday(self, day):
+        new_user_num_today = db.session.query(UserModel.open_id).outerjoin(LoginModel, LoginModel.open_id == UserModel.open_id).filter(UserModel.create_time >= day).count()
+        return new_user_num_today
 
     def _userNumByGender(self):
         male_number = UserModel.query.filter(UserModel.sex == "男").count()

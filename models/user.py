@@ -15,5 +15,10 @@ class UserModel(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.now)
 
 
+class LoginModel(db.Model):
+    __tablename__ = "login"
+    open_id = db.Column(db.String(100), primary_key=True)
+
+
 
 

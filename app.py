@@ -1,8 +1,8 @@
 from flask import Flask
 import config
 from exts import db, mail, cache, avatars
+from taskSchedule import scheduler
 from flask_migrate import Migrate
-from models import admin, errorInfo, garbage, search, user, game
 from routes.admin.front import admin_bp
 from flask_cors import CORS
 
@@ -13,9 +13,10 @@ db.init_app(app)
 mail.init_app(app)
 cache.init_app(app)
 avatars.init_app(app)
+scheduler.init_app(app)
 
 migrate = Migrate(app, db)
-
+scheduler.start()
 
 app.register_blueprint(admin_bp)
 CORS(app)

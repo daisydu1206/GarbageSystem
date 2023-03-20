@@ -15,6 +15,10 @@ SQLALCHEMY_DATABASE_URI = db_url
 SQLALCHEMY_TRACK_MODIFICALTIONS = False
 
 
+# apsschedule配置
+SCHEDULER_API_ENABLED = True
+
+
 # 邮箱配置
 MAIL_SERVER = "smtp.qq.com"
 MAIL_USE_SSL = True
